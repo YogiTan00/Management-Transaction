@@ -1,0 +1,39 @@
+@startuml
+'https://plantuml.com/class-diagram
+
+'1. Abstract Class / Base Struct
+abstract class Audit <<(S,#FF7700)>> {
+  - CreatedAt: Timestamp
+  - UpdatedAt: Timestamp
+  - DeletedAt: Timestamp
+}
+
+'2. Product Aggregate
+abstract class Product <<(P,#1AFF00)>> {
+  - Id: uuid
+  - Title: text
+  - TypeSize: enum (A5,B5)
+  - Price: BigInteger
+  - Discount: integer
+  - DiscountPrice: BigInteger
+}
+
+'3. Transaction Aggregate
+abstract class Transaction <<(T,#005EFF)>> {
+  - Id: uuid
+  - ProductId: uuid
+  - ProductTitle: text
+  - UnitReturn: integer
+  - UnitTotal: integer
+  - Date: timestamp
+  - Notes: text
+}
+
+'--- Hubungan Pewarisan (Inheritance) ---
+Audit <|-- Product
+Audit <|-- Transaction
+
+'--- Hubungan Relasi (Relationship) ---
+Product "1" -- "0..*" Transaction : ordered_in >
+
+@enduml
